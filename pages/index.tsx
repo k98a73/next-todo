@@ -14,9 +14,9 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        {/* <Button color="primary"> */}
+        <Button color="primary">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
-        {/* </Button> */}
+        </Button>
 
         <p className={styles.description}>
           Get started by editing{" "}
