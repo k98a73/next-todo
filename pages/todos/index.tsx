@@ -1,18 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NextLink from "next/link";
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Heading,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Center, Container, Heading, VStack } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
 import { db } from "../../lib/firebase";
+import TaskItem from "../../components/TaskItem";
 
 const Home: NextPage = () => {
   const [tasks, setTasks] = useState([{ id: "", title: "" }]);
@@ -42,12 +35,8 @@ const Home: NextPage = () => {
       </Heading>
       <Container py="3" maxW="800px">
         <VStack spacing="3" justify="center" w="full">
-          {tasks.map((task, index) => (
-            <Box w="full" bgColor="teal.100" rounded="full" key={index}>
-              <Text fontSize="lg" color="gray.600" py="1" align="center">
-                {task.title}
-              </Text>
-            </Box>
+          {tasks.map((task) => (
+            <TaskItem key={task.id} id={task.id} title={task.title} />
           ))}
         </VStack>
         <Center mt="2">
