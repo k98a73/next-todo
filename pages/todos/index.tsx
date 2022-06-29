@@ -1,6 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Heading,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
 import { db } from "../../lib/firebase";
@@ -22,12 +31,33 @@ const Home: NextPage = () => {
       <Head>
         <title>TODOリスト</title>
       </Head>
-      <Heading>TODO一覧</Heading>
-      <Box>
-        {tasks.map((task, index) => (
-          <Text key={index}>{task.title}</Text>
-        ))}
-      </Box>
+      <Heading
+        textAlign="center"
+        w="full"
+        py="2"
+        bgColor="cyan.600"
+        color="gray.50"
+      >
+        TODO一覧
+      </Heading>
+      <Container py="3" maxW="800px">
+        <VStack spacing="3" justify="center" w="full">
+          {tasks.map((task, index) => (
+            <Box w="full" bgColor="teal.100" rounded="full" key={index}>
+              <Text fontSize="lg" color="gray.600" py="1" align="center">
+                {task.title}
+              </Text>
+            </Box>
+          ))}
+        </VStack>
+        <Center mt="2">
+          <NextLink href="/todos/create" passHref>
+            <Button as="a" colorScheme="blackAlpha">
+              TODO作成に進む
+            </Button>
+          </NextLink>
+        </Center>
+      </Container>
     </>
   );
 };
