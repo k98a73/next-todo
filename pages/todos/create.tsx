@@ -33,7 +33,7 @@ export default function Create() {
   const [todoStatus, setTodoStatus] = useState("未着手");
 
   const today = new Date();
-  const [todoDate, setTodoDate] = useState<Date>(today);
+  const [todoDate, setTodoDate] = useState<any>(today);
   registerLocale("ja", ja);
 
   const newTask = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -100,8 +100,10 @@ export default function Create() {
                 }}
               />
             </HStack>
+            <NextLink href="/todos" passHref>
             <IconButton
               aria-label="add"
+              as="a"
               shadow="lg"
               bg="white"
               color="gray.400"
@@ -109,7 +111,8 @@ export default function Create() {
               icon={<AddIcon />}
               disabled={!todoTitle}
               onClick={newTask}
-            ></IconButton>
+            />
+            </NextLink>
           </VStack>
         </FormControl>
         <Center>

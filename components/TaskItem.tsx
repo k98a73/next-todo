@@ -9,12 +9,11 @@ interface PROPS {
 }
 
 const TaskItem: React.FC<PROPS> = (props) => {
-  console.log("props.date", props.date);
-
   return (
     <Text fontSize="lg" color="gray.600" py="1" align="center">
-      id:{props.id} <br /> TODO:{props.title} <br /> 状況:{props.status} <br />
-      期限:
+      id: {props.id} <br /> TODO: {props.title} <br /> 状況: {props.status}{" "}
+      <br />
+      期限:{" "}
       {new Date(props.date)?.getFullYear() +
         "/" +
         (new Date(props.date)?.getMonth() + 1) +
