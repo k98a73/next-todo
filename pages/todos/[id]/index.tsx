@@ -84,8 +84,8 @@ const TodoDetail: React.FC = () => {
         </VStack>
         <Center mt="5">
           <NextLink href="/todos" passHref>
-            <Button as="a" colorScheme="blackAlpha">
-              TODO一覧
+            <Button as="a" variant="link">
+              TODO一覧に戻る
             </Button>
           </NextLink>
         </Center>
