@@ -7,7 +7,12 @@ import {
   Center,
   Container,
   Heading,
+  HStack,
+  Select,
+  Text,
   VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
@@ -18,6 +23,21 @@ const Home: NextPage = () => {
   const [tasks, setTasks] = useState([
     { id: "", title: "", status: "未着手", date: new Date() },
   ]);
+  const [idFilter, setIdFilter] = useState("全て");
+  const taskId = tasks.map((task) => task.id);
+  const taskIdFilter = ["全て", ...taskId];
+  const [dateFilter, setDateFilter] = useState("全て");
+  const taskDate = tasks.map(
+    (task) =>
+      new Date(task.date)?.getFullYear() +
+      "/" +
+      (new Date(task.date)?.getMonth() + 1) +
+      "/" +
+      new Date(task.date)?.getDate()
+  );
+  const taskDateFilter = ["全て", ...taskDate];
+  const [statusFilter, setStatusFilter] = useState("全て");
+  const [filteredTasks, setFilteredTasks] = useState([]);
 
   useEffect(() => {
     const unSub = db.collection("tasks").onSnapshot((snapshot) => {
@@ -32,6 +52,79 @@ const Home: NextPage = () => {
     });
     return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
   }, []);
+
+  useEffect(() => {
+    const filteringTasksId = () => {
+      let isBreak = false;
+      for (let id of taskIdFilter) {
+        switch (idFilter) {
+          case "全て":
+            setFilteredTasks(tasks);
+            break;
+          case id.toString():
+            setFilteredTasks(tasks.filter((task) => task.id === id));
+            isBreak = true;
+            break;
+          default:
+            setFilteredTasks(tasks);
+        }
+        if (isBreak) break;
+      }
+    };
+    filteringTasksId();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idFilter, tasks]);
+
+  useEffect(() => {
+    const filteringTasksDate = () => {
+      let isBreak = false;
+      for (let date of taskDateFilter) {
+        switch (dateFilter) {
+          case "全て":
+            setFilteredTasks(tasks);
+            break;
+          case date:
+            setFilteredTasks(
+              tasks.filter(
+                (task) =>
+                  new Date(task.date)?.getFullYear() +
+                    "/" +
+                    (new Date(task.date)?.getMonth() + 1) +
+                    "/" +
+                    new Date(task.date)?.getDate() ===
+                  date
+              )
+            );
+            isBreak = true;
+            break;
+          default:
+            setFilteredTasks(tasks);
+        }
+        if (isBreak) break;
+      }
+    };
+    filteringTasksDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateFilter, tasks]);
+
+  useEffect(() => {
+    const filteringTasksStatus = () => {
+      switch (statusFilter) {
+        case "未着手":
+          setFilteredTasks(tasks.filter((task) => task.status === "未着手"));
+          break;
+        case "作業中":
+          setFilteredTasks(tasks.filter((task) => task.status === "作業中"));
+          break;
+        case "完了":
+          setFilteredTasks(tasks.filter((task) => task.status === "完了"));
+          break;
+        default:
+          setFilteredTasks(tasks);
+      }
+    };
+    filteringTasksStatus();
+  }, [statusFilter, tasks]);
 
   return (
     <>
@@ -48,42 +141,106 @@ const Home: NextPage = () => {
         TODO一覧
       </Heading>
       <Container py="3" maxW="800px">
-        <VStack mt="2" spacing="4" justify="center" w="full">
-          {tasks.map((task) => {
-            const todoInfo = {
-              id: task.id,
-              title: task.title,
-              status: task.status,
-              date: task.date,
-            };
-            return (
-              <NextLink
-                key={task.id}
-                href={{ pathname: `/todos/${task.id}`, query: todoInfo }}
-                passHref
+        <VStack>
+          <HStack mb="2">
+            <Text fontSize="lg" color="gray.600">
+              id:
+            </Text>
+            <Select
+              size="md"
+              color="gray.500"
+              fontWeight="bold"
+              textAlign="center"
+              variant="filled"
+              value={idFilter}
+              onChange={(e) => setIdFilter(e.target.value)}
+            >
+              {taskIdFilter.map((id: string) => (
+                <option key={id} value={id}>
+                  {id}
+                </option>
+              ))}
+            </Select>
+          </HStack>
+          <Wrap>
+            <WrapItem>
+              <Text w="55px" fontSize="lg" color="gray.600">
+                期限:
+              </Text>
+              <Select
+                size="md"
+                color="gray.500"
+                fontWeight="bold"
+                textAlign="center"
+                variant="filled"
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
               >
-                <Box
-                  as="a"
-                  w="full"
-                  bgColor="teal.100"
-                  boxShadow="md"
-                  rounded="full"
+                {taskDateFilter.map((date, index) => (
+                  <option key={index} value={date}>
+                    {date}
+                  </option>
+                ))}
+              </Select>
+            </WrapItem>
+            <WrapItem>
+              <Text w="70px" fontSize="lg" color="gray.600">
+                状況:
+              </Text>
+              <Select
+                size="md"
+                color="gray.500"
+                mb="2"
+                fontWeight="bold"
+                textAlign="center"
+                variant="filled"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="全て">全て</option>
+                <option value="未着手">未着手</option>
+                <option value="作業中">作業中</option>
+                <option value="完了">完了</option>
+              </Select>
+            </WrapItem>
+          </Wrap>
+          <Wrap>
+            {filteredTasks.map((task) => {
+              const todoInfo = {
+                id: task.id,
+                title: task.title,
+                status: task.status,
+                date: task.date,
+              };
+              return (
+                <NextLink
+                  key={task.id}
+                  href={{ pathname: `/todos/${task.id}`, query: todoInfo }}
+                  passHref
                 >
-                  <TaskItem
-                    id={task.id}
-                    title={task.title}
-                    status={task.status}
-                    date={task.date}
-                  />
-                </Box>
-              </NextLink>
-            );
-          })}
+                  <WrapItem
+                    as="a"
+                    p="3"
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    boxShadow="md"
+                  >
+                    <TaskItem
+                      id={task.id}
+                      title={task.title}
+                      status={task.status}
+                      date={task.date}
+                    />
+                  </WrapItem>
+                </NextLink>
+              );
+            })}
+          </Wrap>
         </VStack>
         <Center mt="4">
           <NextLink href="/todos/create" passHref>
-            <Button as="a" colorScheme="blackAlpha">
-              TODO作成
+            <Button as="a" variant="link">
+              TODO作成に進む
             </Button>
           </NextLink>
         </Center>

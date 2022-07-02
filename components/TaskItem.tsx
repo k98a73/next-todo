@@ -10,7 +10,7 @@ interface PROPS {
 
 const TaskItem: React.FC<PROPS> = (props) => {
   return (
-    <Text fontSize="lg" color="gray.600" py="1" align="center">
+    <Text fontSize="lg" color="gray.800" py="1" align="center">
       id: {props.id} <br /> TODO: {props.title} <br /> 状況: {props.status}{" "}
       <br />
       期限:{" "}

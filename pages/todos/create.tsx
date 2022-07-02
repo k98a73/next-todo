@@ -72,7 +72,7 @@ export default function Create() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setTodoTitle(e.target.value)
               }
-            ></Input>
+            />
             <Select
               size="md"
               w="100px"
@@ -89,7 +89,9 @@ export default function Create() {
               ))}
             </Select>
             <HStack>
-              <Text w="55px" fontSize="lg" color="gray.600">期限:</Text>
+              <Text w="55px" fontSize="lg" color="gray.600">
+                期限:
+              </Text>
               <DatePicker
                 dateFormat="yyyy/MM/dd"
                 locale="ja"
@@ -101,24 +103,24 @@ export default function Create() {
               />
             </HStack>
             <NextLink href="/todos" passHref>
-            <IconButton
-              aria-label="add"
-              as="a"
-              shadow="lg"
-              bg="white"
-              color="gray.400"
-              rounded="full"
-              icon={<AddIcon />}
-              disabled={!todoTitle}
-              onClick={newTask}
-            />
+              <IconButton
+                aria-label="add"
+                as="a"
+                shadow="lg"
+                bg="white"
+                color="gray.400"
+                rounded="full"
+                icon={<AddIcon />}
+                disabled={!todoTitle}
+                onClick={newTask}
+              />
             </NextLink>
           </VStack>
         </FormControl>
         <Center>
           <NextLink href="/todos" passHref>
-            <Button as="a" colorScheme="blackAlpha">
-              TODO一覧
+            <Button as="a" variant="link">
+              TODO一覧に戻る
             </Button>
           </NextLink>
         </Center>

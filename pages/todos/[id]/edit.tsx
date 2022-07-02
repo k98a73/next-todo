@@ -17,7 +17,7 @@ import NextLink from "next/link";
 import { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ja from "date-fns/locale/ja";
-import { AddIcon } from "@chakra-ui/icons";
+import { GrUpdate } from "react-icons/gr";
 
 import { db } from "../../../lib/firebase";
 
@@ -88,10 +88,7 @@ export default function Edit() {
               onChange={(e) => setTodoEditStatus(e.target.value)}
             >
               {filterOptions.map(({ value, label }) => (
-                <option
-                  key={label}
-                  value={value}
-                >
+                <option key={label} value={value}>
                   {value}
                 </option>
               ))}
@@ -118,7 +115,7 @@ export default function Edit() {
                 bg="white"
                 color="gray.400"
                 rounded="full"
-                icon={<AddIcon />}
+                icon={<GrUpdate />}
                 onClick={editTask}
               />
             </NextLink>
