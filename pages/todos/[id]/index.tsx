@@ -3,17 +3,16 @@ import {
   Button,
   Center,
   Container,
-  Heading,
   HStack,
   IconButton,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 
 import { db } from "../../../lib/firebase";
+import Header from "../../../components/Header";
 
 const TodoDetail: React.FC = () => {
   const router = useRouter();
@@ -30,18 +29,7 @@ const TodoDetail: React.FC = () => {
 
   return (
     <>
-      <Head>
-        <title>TODOリスト</title>
-      </Head>
-      <Heading
-        textAlign="center"
-        w="full"
-        py="2"
-        bgColor="cyan.600"
-        color="gray.50"
-      >
-        TODO詳細
-      </Heading>
+      <Header title={"TODO詳細"} />
       <Container py="3" maxW="800px">
         <VStack>
           <Text

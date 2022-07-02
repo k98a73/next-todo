@@ -71,7 +71,7 @@ const SignIn: React.FC = () => {
             </InputGroup>
             <NextLink href="/todos" passHref>
               <IconButton
-                aria-label="add"
+                aria-label="signIn"
                 as="a"
                 shadow="lg"
                 bg="white"

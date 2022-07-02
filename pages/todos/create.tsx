@@ -4,7 +4,6 @@ import {
   Center,
   Container,
   FormControl,
-  Heading,
   HStack,
   IconButton,
   Input,
@@ -12,7 +11,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import Head from "next/head";
 import NextLink from "next/link";
 import { useState } from "react";
 
@@ -21,6 +19,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import ja from "date-fns/locale/ja";
 
 import { db } from "../../lib/firebase";
+import Header from "../../components/Header";
 
 export default function Create() {
   const [todoTitle, setTodoTitle] = useState("");
@@ -48,18 +47,7 @@ export default function Create() {
 
   return (
     <>
-      <Head>
-        <title>TODOリスト</title>
-      </Head>
-      <Heading
-        textAlign="center"
-        w="full"
-        py="2"
-        bgColor="cyan.600"
-        color="gray.50"
-      >
-        TODO作成
-      </Heading>
+      <Header title={"TODO作成"} />
       <Container py="3" maxW="800px">
         <FormControl mb="3">
           <VStack>

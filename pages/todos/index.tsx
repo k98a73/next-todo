@@ -1,12 +1,9 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import NextLink from "next/link";
 import {
-  Box,
   Button,
   Center,
   Container,
-  Heading,
   HStack,
   Select,
   Text,
@@ -18,6 +15,7 @@ import React, { useState, useEffect } from "react";
 
 import { db } from "../../lib/firebase";
 import TaskItem from "../../components/TaskItem";
+import Header from "../../components/Header";
 
 const Home: NextPage = () => {
   const [tasks, setTasks] = useState([
@@ -128,18 +126,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>TODOリスト</title>
-      </Head>
-      <Heading
-        textAlign="center"
-        w="full"
-        py="2"
-        bgColor="cyan.600"
-        color="gray.50"
-      >
-        TODO一覧
-      </Heading>
+      <Header title={"TODO一覧"} />
       <Container py="3" maxW="800px">
         <VStack>
           <HStack mb="2">

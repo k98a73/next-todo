@@ -71,7 +71,7 @@ export default function SignUp() {
             </InputGroup>
             <NextLink href="/todos" passHref>
               <IconButton
-                aria-label="add"
+                aria-label="signUp"
                 as="a"
                 shadow="lg"
                 bg="white"
