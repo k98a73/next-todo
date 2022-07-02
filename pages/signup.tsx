@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { TiUserAddOutline } from "react-icons/ti";
 
@@ -22,6 +23,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+  const router = useRouter();
 
   return (
     <>
@@ -69,24 +71,22 @@ export default function SignUp() {
                 </Button>
               </InputRightElement>
             </InputGroup>
-            <NextLink href="/todos" passHref>
-              <IconButton
-                aria-label="signUp"
-                as="a"
-                shadow="lg"
-                bg="white"
-                color="gray.400"
-                rounded="full"
-                icon={<TiUserAddOutline />}
-                onClick={async () => {
-                  try {
-                    await auth.createUserWithEmailAndPassword(email, password);
-                  } catch (error: any) {
-                    alert(error.message);
-                  }
-                }}
-              />
-            </NextLink>
+            <IconButton
+              aria-label="signUp"
+              shadow="lg"
+              bg="white"
+              color="gray.400"
+              rounded="full"
+              icon={<TiUserAddOutline />}
+              onClick={async () => {
+                try {
+                  await auth.createUserWithEmailAndPassword(email, password);
+                  router.push("/todos");
+                } catch (error: any) {
+                  alert(error.message);
+                }
+              }}
+            />
           </VStack>
         </FormControl>
         <Center mt="5">

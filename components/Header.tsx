@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { Flex, Heading, IconButton, Spacer } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -11,6 +11,8 @@ interface PROPS {
 }
 
 const Header: React.FC<PROPS> = (props) => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -25,23 +27,22 @@ const Header: React.FC<PROPS> = (props) => {
       >
         <Heading>{props.title}</Heading>
         <Spacer />
-        <NextLink href="/signin" passHref>
-          <IconButton
-            aria-label="logout"
-            as="a"
-            bg="cyan.600"
-            color="gray.50"
-            rounded="full"
-            icon={<FaSignOutAlt />}
-            onClick={async () => {
-              try {
-                await auth.signOut();
-              } catch (error: any) {
-                alert(error.message);
-              }
-            }}
-          />
-        </NextLink>
+        <IconButton
+          aria-label="logout"
+          bg="cyan.600"
+          color="gray.50"
+          rounded="full"
+          icon={<FaSignOutAlt />}
+          onClick={async () => {
+            try {
+              await auth.signOut();
+              
+              router.push("/signin");
+            } catch (error: any) {
+              alert(error.message);
+            }
+          }}
+        />
       </Flex>
     </>
   );
