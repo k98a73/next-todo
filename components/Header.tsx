@@ -10,7 +10,7 @@ interface PROPS {
   title: string;
 }
 
-const Header: React.FC<PROPS> = (props) => {
+const Header: React.FC<PROPS> = ({ title }) => {
   const router = useRouter();
 
   return (
@@ -25,7 +25,7 @@ const Header: React.FC<PROPS> = (props) => {
         bgColor="cyan.600"
         color="gray.50"
       >
-        <Heading>{props.title}</Heading>
+        <Heading>{title}</Heading>
         <Spacer />
         <IconButton
           aria-label="logout"
@@ -36,7 +36,7 @@ const Header: React.FC<PROPS> = (props) => {
           onClick={async () => {
             try {
               await auth.signOut();
-              
+
               router.push("/signin");
             } catch (error: any) {
               alert(error.message);

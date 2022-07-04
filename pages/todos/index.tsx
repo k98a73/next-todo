@@ -17,10 +17,15 @@ import { db } from "../../lib/firebase";
 import TaskItem from "../../components/TaskItem";
 import Header from "../../components/Header";
 
+interface TaskItem {
+  id: string;
+  title: string;
+  status: string;
+  date: any;
+}
+
 const Home: NextPage = () => {
-  const [tasks, setTasks] = useState([
-    { id: "", title: "", status: "未着手", date: new Date() },
-  ]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [idFilter, setIdFilter] = useState("全て");
   const taskId = tasks.map((task) => task.id);
   const taskIdFilter = ["全て", ...taskId];
@@ -35,7 +40,7 @@ const Home: NextPage = () => {
   );
   const taskDateFilter = ["全て", ...taskDate];
   const [statusFilter, setStatusFilter] = useState("全て");
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState<TaskItem[]>([]);
 
   useEffect(() => {
     const unSub = db.collection("tasks").onSnapshot((snapshot) => {
