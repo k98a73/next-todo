@@ -1,18 +1,14 @@
 import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { Flex, Heading, IconButton, Spacer } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
-
-import { auth } from "../lib/firebase";
+import useSignOut from "../hooks/useSignOut";
 
 interface PROPS {
   title: string;
 }
 
 const Header: React.FC<PROPS> = ({ title }) => {
-  const router = useRouter();
-
   return (
     <>
       <Head>
@@ -33,15 +29,7 @@ const Header: React.FC<PROPS> = ({ title }) => {
           color="gray.50"
           rounded="full"
           icon={<FaSignOutAlt />}
-          onClick={async () => {
-            try {
-              await auth.signOut();
-
-              router.push("/signin");
-            } catch (error: any) {
-              alert(error.message);
-            }
-          }}
+          onClick={useSignOut()}
         />
       </Flex>
     </>

@@ -19,16 +19,11 @@ import { GrUpdate } from "react-icons/gr";
 
 import { db } from "../../../lib/firebase";
 import Header from "../../../components/Header";
+import FilterOptions from "../../../constans/FilterOptions";
 
 export default function Edit() {
   const router = useRouter();
   const [todoEditTitle, setTodoEditTitle] = useState(router.query.title);
-
-  const filterOptions = [
-    { label: "notStarted", value: "未着手" },
-    { label: "inProgress", value: "作業中" },
-    { label: "done", value: "完了" },
-  ];
   const [todoEditStatus, setTodoEditStatus] = useState(router.query.status);
 
   const editDay = new Date(Number(router.query.date));
@@ -75,7 +70,7 @@ export default function Edit() {
               defaultValue={router.query.status}
               onChange={(e) => setTodoEditStatus(e.target.value)}
             >
-              {filterOptions.map(({ value, label }) => (
+              {FilterOptions.map(({ value, label }) => (
                 <option key={label} value={value}>
                   {value}
                 </option>

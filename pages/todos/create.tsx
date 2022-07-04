@@ -20,24 +20,20 @@ import ja from "date-fns/locale/ja";
 
 import { db } from "../../lib/firebase";
 import Header from "../../components/Header";
+import FilterOptions from "../../constans/FilterOptions";
 
 export default function Create() {
   const [todoTitle, setTodoTitle] = useState("");
-
-  const filterOptions = [
-    { label: "notStarted", value: "未着手" },
-    { label: "inProgress", value: "作業中" },
-    { label: "done", value: "完了" },
-  ];
   const [todoStatus, setTodoStatus] = useState("未着手");
-
   const today = new Date();
   const [todoDate, setTodoDate] = useState<any>(today);
   registerLocale("ja", ja);
 
-  const newTask = (e: React.MouseEvent<HTMLButtonElement>) => {
-    /* IDはFirebaseで自動的に付与してくれるので、省略 */
-    db.collection("tasks").add({
+  const newTask = () => {
+    // 自動採番のドキュメントIDを事前に取得
+    const todoID = db.collection("tasks").doc().id;
+    db.collection("tasks").doc(todoID).set({
+      id: todoID,
       title: todoTitle,
       status: todoStatus,
       date: todoDate,
@@ -70,7 +66,7 @@ export default function Create() {
               variant="filled"
               onChange={(e) => setTodoStatus(e.target.value)}
             >
-              {filterOptions.map(({ value, label }) => (
+              {FilterOptions.map(({ value, label }) => (
                 <option key={label} value={value}>
                   {value}
                 </option>

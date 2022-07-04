@@ -46,7 +46,7 @@ const Home: NextPage = () => {
     const unSub = db.collection("tasks").onSnapshot((snapshot) => {
       setTasks(
         snapshot.docs.map((doc) => ({
-          id: doc.id,
+          id: doc.data().id,
           title: doc.data().title,
           status: doc.data().status,
           date: doc.data().date.seconds * 1000,
@@ -132,7 +132,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Header title={"TODO一覧"} />
-      <Container py="3" maxW="800px">
+      <Container py="3" maxW="900px">
         <VStack>
           <HStack mb="2">
             <Text fontSize="lg" color="gray.600">

@@ -12,18 +12,16 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+
 import { useState } from "react";
 import { FaSignInAlt } from "react-icons/fa";
-
-import { auth } from "../lib/firebase";
+import useSignIn from "../hooks/useSignIn";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  const router = useRouter();
 
   return (
     <>
@@ -79,14 +77,7 @@ const SignIn: React.FC = () => {
               color="gray.400"
               rounded="full"
               icon={<FaSignInAlt />}
-              onClick={async () => {
-                try {
-                  await auth.signInWithEmailAndPassword(email, password);
-                  router.push("/todos");
-                } catch (error: any) {
-                  alert(error.message);
-                }
-              }}
+              onClick={useSignIn(email, password)}
             />
           </VStack>
         </FormControl>
