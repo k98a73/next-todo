@@ -81,7 +81,7 @@ export default function SignUp() {
           </VStack>
         </FormControl>
         <Center mt="5">
-          <NextLink href="/signin" passHref>
+          <NextLink href="/" passHref>
             <Button as="a" variant="link">
               ログインはこちら
             </Button>

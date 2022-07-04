@@ -7,7 +7,7 @@ const useSignOut = () => {
   return async () => {
     try {
       await auth.signOut();
-      router.push("/signin");
+      router.push("/");
     } catch (error: any) {
       alert(error.message);
     }
